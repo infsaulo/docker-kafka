@@ -13,6 +13,7 @@ services:
             ZOOKEEPER_SYNC_LIMIT: 2
             ZOOKEEPER_SERVERS: $ZK_CLUSTER_URL
         deploy:
+            mode: global
             placement:
                 constraints: [node.labels.zookeeper == true]
 
@@ -26,5 +27,6 @@ services:
         depends_on:
             - zk
         deploy:
+            mode: global
             placement:
                 constraints: [node.labels.kafka == true]
