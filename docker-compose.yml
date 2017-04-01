@@ -15,7 +15,6 @@ services:
         deploy:
             placement:
                 constraints: [node.labels.zookeeper == true]
-        network_mode: host
 
     kafka:
         image: confluentinc/cp-kafka:latest
@@ -29,4 +28,3 @@ services:
         deploy:
             placement:
                 constraints: [node.labels.kafka == true]
-       network_mode: host
