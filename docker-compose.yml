@@ -15,6 +15,8 @@ services:
             - 2181:2181
             - 2888:2888
             - 3888:3888
+        networks:
+            - host
         deploy:
             mode: global
             placement:
@@ -28,6 +30,8 @@ services:
             KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://$EXTERNAL_IP:9092
         depends_on:
             - zk
+        networks:
+            - host
         deploy:
             mode: global
             placement:
