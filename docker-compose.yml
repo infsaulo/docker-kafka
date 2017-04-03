@@ -16,6 +16,10 @@ services:
             - 12181:12181
             - 12888:12888
             - 13888:13888
+        volumes:
+            - /zk-kafka/zookeeper/data:/var/lib/zookeeper/data
+            - /zk-kafka/zookeeper/log:/var/lib/zookeeper/log
+            - /zk-kafka/zookeeper/secrets:/etc/zookeeper/secrets
         deploy:
             placement:
                 constraints: 
@@ -36,6 +40,10 @@ services:
             - 22181:22181
             - 22888:22888
             - 23888:23888
+        volumes:
+            - /zk-kafka/zookeeper/data:/var/lib/zookeeper/data
+            - /zk-kafka/zookeeper/log:/var/lib/zookeeper/log
+            - /zk-kafka/zookeeper/secrets:/etc/zookeeper/secrets
         deploy:
             placement:
                 constraints: 
@@ -56,6 +64,10 @@ services:
             - 32181:32181
             - 32888:32888
             - 33888:33888
+        volumes:
+            - /zk-kafka/zookeeper/data:/var/lib/zookeeper/data
+            - /zk-kafka/zookeeper/log:/var/lib/zookeeper/log
+            - /zk-kafka/zookeeper/secrets:/etc/zookeeper/secrets
         deploy:
             placement:
                 constraints: 
@@ -71,6 +83,9 @@ services:
             KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka1:19092
         ports:
             - 19092:19092
+        volumes:
+            - /zk-kafka/kafka/data:/var/lib/kafka/data
+            - /zk-kafka/kafka/secrets:/etc/kafka/secrets
         depends_on:
             - zk1
             - zk2
@@ -90,6 +105,9 @@ services:
             KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka2:29092
         ports:
             - 29092:29092
+        volumes:
+            - /zk-kafka/kafka/data:/var/lib/kafka/data
+            - /zk-kafka/kafka/secrets:/etc/kafka/secrets
         depends_on:
             - zk1
             - zk2
@@ -109,6 +127,9 @@ services:
             KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka3:39092
         ports:
             - 39092:39092
+        volumes:
+            - /zk-kafka/kafka/data:/var/lib/kafka/data
+            - /zk-kafka/kafka/secrets:/etc/kafka/secrets
         depends_on:
             - zk1
             - zk2
