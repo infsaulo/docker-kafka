@@ -64,7 +64,7 @@ services:
 
     kafka1:
         image: confluentinc/cp-kafka:latest
-        hostname:kafka1
+        hostname: kafka1
         environment:
             KAFKA_BROKER_ID: 1
             KAFKA_ZOOKEEPER_CONNECT: zk1:2181,zk2:2181,zk3:2181
@@ -83,7 +83,7 @@ services:
     
     kafka2:
         image: confluentinc/cp-kafka:latest
-        hostname:kafka2
+        hostname: kafka2
         environment:
             KAFKA_BROKER_ID: 2
             KAFKA_ZOOKEEPER_CONNECT: zk1:2181,zk2:2181,zk3:2181
@@ -102,7 +102,7 @@ services:
 
     kafka3:
         image: confluentinc/cp-kafka:latest
-        hostname:kafka3
+        hostname: kafka3
         environment:
             KAFKA_BROKER_ID: 3
             KAFKA_ZOOKEEPER_CONNECT: zk1:2181,zk2:2181,zk3:2181
