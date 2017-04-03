@@ -7,15 +7,15 @@ services:
         hostname: zk1
         environment:
             ZOOKEEPER_SERVER_ID: 1
-            ZOOKEEPER_CLIENT_PORT: 2181
+            ZOOKEEPER_CLIENT_PORT: 12181
             ZOOKEEPER_TICK_TIME: 2000
             ZOOKEEPER_INIT_LIMIT: 5
             ZOOKEEPER_SYNC_LIMIT: 2
-            ZOOKEEPER_SERVERS: zk1:2888:3888;zk2:2888:3888;zk3:2888:3888
+            ZOOKEEPER_SERVERS: zk1:12888:13888;zk2:22888:23888;zk3:32888:33888
         ports:
-            - 2181:2181
-            - 2888:2888
-            - 3888:3888
+            - 12181:12181
+            - 12888:12888
+            - 13888:13888
         deploy:
             placement:
                 constraints: 
@@ -27,15 +27,15 @@ services:
         hostname: zk2
         environment:
             ZOOKEEPER_SERVER_ID: 2
-            ZOOKEEPER_CLIENT_PORT: 2181
+            ZOOKEEPER_CLIENT_PORT: 22181
             ZOOKEEPER_TICK_TIME: 2000
             ZOOKEEPER_INIT_LIMIT: 5
             ZOOKEEPER_SYNC_LIMIT: 2
-            ZOOKEEPER_SERVERS: zk1:2888:3888;zk2:2888:3888;zk3:2888:3888
+            ZOOKEEPER_SERVERS: zk1:12888:13888;zk2:22888:23888;zk3:32888:33888
         ports:
-            - 2181:2181
-            - 2888:2888
-            - 3888:3888
+            - 22181:22181
+            - 22888:22888
+            - 23888:23888
         deploy:
             placement:
                 constraints: 
@@ -47,15 +47,15 @@ services:
         hostname: zk3
         environment:
             ZOOKEEPER_SERVER_ID: 3
-            ZOOKEEPER_CLIENT_PORT: 2181
+            ZOOKEEPER_CLIENT_PORT: 32181
             ZOOKEEPER_TICK_TIME: 2000
             ZOOKEEPER_INIT_LIMIT: 5
             ZOOKEEPER_SYNC_LIMIT: 2
-            ZOOKEEPER_SERVERS: zk1:2888:3888;zk2:2888:3888;zk3:2888:3888
+            ZOOKEEPER_SERVERS: zk1:12888:13888;zk2:22888:23888;zk3:32888:33888
         ports:
-            - 2181:2181
-            - 2888:2888
-            - 3888:3888
+            - 32181:32181
+            - 32888:32888
+            - 33888:33888
         deploy:
             placement:
                 constraints: 
@@ -67,10 +67,10 @@ services:
         hostname: kafka1
         environment:
             KAFKA_BROKER_ID: 1
-            KAFKA_ZOOKEEPER_CONNECT: zk1:2181,zk2:2181,zk3:2181
-            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka1:9092
+            KAFKA_ZOOKEEPER_CONNECT: zk1:12181,zk2:22181,zk3:32181
+            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka1:19092
         ports:
-            - 9092:9092
+            - 19092:19092
         depends_on:
             - zk1
             - zk2
@@ -86,10 +86,10 @@ services:
         hostname: kafka2
         environment:
             KAFKA_BROKER_ID: 2
-            KAFKA_ZOOKEEPER_CONNECT: zk1:2181,zk2:2181,zk3:2181
-            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka2:9093
+            KAFKA_ZOOKEEPER_CONNECT: zk1:12181,zk2:22181,zk3:32181
+            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka2:29092
         ports:
-            - 9093:9093
+            - 29092:29092
         depends_on:
             - zk1
             - zk2
@@ -106,9 +106,9 @@ services:
         environment:
             KAFKA_BROKER_ID: 3
             KAFKA_ZOOKEEPER_CONNECT: zk1:2181,zk2:2181,zk3:2181
-            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka3:9094
+            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka3:39092
         ports:
-            - 9094:9094
+            - 39092:39092
         depends_on:
             - zk1
             - zk2
