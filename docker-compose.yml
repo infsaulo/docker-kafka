@@ -2,35 +2,119 @@ version: "3"
 
 services:
 
-    zk:
+    zk1:
         image: confluentinc/cp-zookeeper:latest
-        hostname: zk$HOSTNAME
+        hostname: zk1
         environment:
-            ZOOKEEPER_SERVER_ID: $ZK_SERVER_ID
+            ZOOKEEPER_SERVER_ID: 1
             ZOOKEEPER_CLIENT_PORT: 2181
             ZOOKEEPER_TICK_TIME: 2000
             ZOOKEEPER_INIT_LIMIT: 5
             ZOOKEEPER_SYNC_LIMIT: 2
-            ZOOKEEPER_SERVERS: $ZK_CLUSTER_URL
+            ZOOKEEPER_SERVERS: zk1:2888:3888;zk2:2888:3888;zk3:2888:3888
         ports:
             - 2181:2181
             - 2888:2888
             - 3888:3888
         deploy:
-            mode: global
             placement:
-                constraints: [node.labels.zookeeper == true]
+                constraints: 
+                    - node.labels.zookeeper == true
+                    - node.labels.zookeeper.id == 1
 
-    kafka:
-        image: confluentinc/cp-kafka:latest
-        hostname:kafka$HOSTNAME
+    zk2:
+        image: confluentinc/cp-zookeeper:latest
+        hostname: zk2
         environment:
-            KAFKA_BROKER_ID: $KAFKA_BROKER_ID
-            KAFKA_ZOOKEEPER_CONNECT: $ZK_KAFKA_CLUSTER_CONN_URL
-            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://$EXTERNAL_IP:9092
-        depends_on:
-            - zk
+            ZOOKEEPER_SERVER_ID: 2
+            ZOOKEEPER_CLIENT_PORT: 2181
+            ZOOKEEPER_TICK_TIME: 2000
+            ZOOKEEPER_INIT_LIMIT: 5
+            ZOOKEEPER_SYNC_LIMIT: 2
+            ZOOKEEPER_SERVERS: zk1:2888:3888;zk2:2888:3888;zk3:2888:3888
+        ports:
+            - 2181:2181
+            - 2888:2888
+            - 3888:3888
         deploy:
-            mode: global
             placement:
-                constraints: [node.labels.kafka == true]
+                constraints: 
+                    - node.labels.zookeeper == true
+                    - node.labels.zookeeper.id == 2
+
+    zk3:
+        image: confluentinc/cp-zookeeper:latest
+        hostname: zk3
+        environment:
+            ZOOKEEPER_SERVER_ID: 3
+            ZOOKEEPER_CLIENT_PORT: 2181
+            ZOOKEEPER_TICK_TIME: 2000
+            ZOOKEEPER_INIT_LIMIT: 5
+            ZOOKEEPER_SYNC_LIMIT: 2
+            ZOOKEEPER_SERVERS: zk1:2888:3888;zk2:2888:3888;zk3:2888:3888
+        ports:
+            - 2181:2181
+            - 2888:2888
+            - 3888:3888
+        deploy:
+            placement:
+                constraints: 
+                    - node.labels.zookeeper == true
+                    - node.labels.zookeeper.id == 3
+
+    kafka1:
+        image: confluentinc/cp-kafka:latest
+        hostname:kafka1
+        environment:
+            KAFKA_BROKER_ID: 1
+            KAFKA_ZOOKEEPER_CONNECT: zk1:2181,zk2:2181,zk3:2181
+            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka1:9092
+        ports:
+            - 9092:9092
+        depends_on:
+            - zk1
+            - zk2
+            - zk3
+        deploy:
+            placement:
+                constraints:
+                    - node.labels.kafka == true
+                    - node.labels.kafka.id == 1
+    
+    kafka2:
+        image: confluentinc/cp-kafka:latest
+        hostname:kafka2
+        environment:
+            KAFKA_BROKER_ID: 2
+            KAFKA_ZOOKEEPER_CONNECT: zk1:2181,zk2:2181,zk3:2181
+            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka2:9092
+        ports:
+            - 9092:9092
+        depends_on:
+            - zk1
+            - zk2
+            - zk3
+        deploy:
+            placement:
+                constraints:
+                    - node.labels.kafka == true
+                    - node.labels.kafka.id == 2
+
+    kafka3:
+        image: confluentinc/cp-kafka:latest
+        hostname:kafka3
+        environment:
+            KAFKA_BROKER_ID: 3
+            KAFKA_ZOOKEEPER_CONNECT: zk1:2181,zk2:2181,zk3:2181
+            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka3:9092
+        ports:
+            - 9092:9092
+        depends_on:
+            - zk1
+            - zk2
+            - zk3
+        deploy:
+            placement:
+                constraints:
+                    - node.labels.kafka == true
+                    - node.labels.kafka.id == 3
