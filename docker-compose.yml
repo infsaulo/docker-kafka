@@ -87,9 +87,9 @@ services:
         environment:
             KAFKA_BROKER_ID: 2
             KAFKA_ZOOKEEPER_CONNECT: zk1:2181,zk2:2181,zk3:2181
-            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka2:9092
+            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka2:9093
         ports:
-            - 9092:9092
+            - 9093:9093
         depends_on:
             - zk1
             - zk2
@@ -106,9 +106,9 @@ services:
         environment:
             KAFKA_BROKER_ID: 3
             KAFKA_ZOOKEEPER_CONNECT: zk1:2181,zk2:2181,zk3:2181
-            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka3:9092
+            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka3:9094
         ports:
-            - 9092:9092
+            - 9094:9094
         depends_on:
             - zk1
             - zk2
